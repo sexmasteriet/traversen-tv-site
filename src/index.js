@@ -1,11 +1,19 @@
 // settings
 let slideDuration = 5000
 
+// elements
+let clockElem = document.getElementsByClassName('clock')[0]
+
 updateSlides()
 
 // update loop
+let now = new Date()
 let lastUpdate = Date.now()
 let updateTimer = setInterval(function() {
+    now = new Date()
+
+    updateClock();
+    
     if (Date.now() - lastUpdate >= slideDuration) {
         lastUpdate = Date.now()
 
@@ -36,11 +44,17 @@ function updateSlides() {
 
     let url = 'https://i.ytimg.com/vi/xT-0x4AHLXA/maxresdefault.jpg'
     getJSON('https://dog.ceo/api/breeds/image/random', function(data) {
-        console.log(data)
         next.innerHTML = '<img src="' + data.message + '">'
     })
 
     previous.innerHTML = ''
+}
+
+function updateClock() {
+    clockElem.innerHTML = now.toLocaleTimeString('sv-se', {
+        hour: '2-digit',
+        minute: '2-digit',
+    })
 }
 
 function getJSON(url, callback) {
